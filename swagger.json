@@ -1,0 +1,29 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "Projeto NodeJS + ReactJS",
+        "description": "Projeto desenvolvido em Node com React",
+        "version": "1.0.0"
+    },
+    "host": "localhost/4000",
+    "basePath": "/",
+    "paths": {
+        "/teste/": {
+            "get": {
+                "parameters": [
+                    {
+                        "in": "query",
+                        "name": "id",
+                        "type": "integer"
+                    },
+                    {
+                        "in": "query",
+                        "name": "num",
+                        "type": "integer"
+                    }
+                ],
+                "responses": {}
+            }
+        }
+    }
+}
