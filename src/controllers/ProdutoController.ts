@@ -39,14 +39,33 @@ class ProdutoController {
         res.status(200).json(novoProduto)
     }
 
-    // TODO
-    // async update(req:Request, res:Response) {
-    //     const prisma = new PrismaClient()
-    //     const produtoAlterado = await prisma.produto.update (
-    //         {
-    //             where: {id: Number(req.params.id)},
+    async update(req:Request, res:Response) {
+        const prisma = new PrismaClient()
+        const produtoAlterado = await prisma.produto.update (
+            {
+                where: {id: Number(req.params.id)},
+                data: req.body,
+                select: {
+                    id: true,
+                    nome: true,
+                    preco: true
+                }
+            }
+        )
 
-    //         }
-    //     )
-    // }
+        res.status(200).json(produtoAlterado);
+    }
+
+    async delete(req:Request, res:Response) {
+        const prisma = new PrismaClient();
+        await prisma.produto.delete(
+            {
+                where: {id: Number(req.params.id)}
+            }
+        )
+
+        res.status(200).json({excluido:true});
+    }
 }
+
+export default ProdutoController
