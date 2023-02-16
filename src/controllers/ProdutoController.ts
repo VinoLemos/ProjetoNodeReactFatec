@@ -12,7 +12,7 @@ class ProdutoController {
         const prisma = new PrismaClient()
         const produto = await prisma.produto.findUnique(
             {
-                where: { id: Number(req.params.id) },
+                where: { id: Number(req.query.id) },
                 select: { id: true, nome: true, preco: true }
             }
         )
