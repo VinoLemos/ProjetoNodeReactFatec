@@ -11,11 +11,40 @@ datasource db {
 }
 
 model Produto {
-  id Int @id @default(autoincrement())
-  nome String @db.VarChar(100)
-  preco Decimal @db.Decimal(12,2)
+  id        Int       @id @default(autoincrement())
+  nome      String    @db.VarChar(100)
+  preco     Decimal   @db.Decimal(12, 2)
   createdAt DateTime? @default(now())
   updatedAt DateTime? @updatedAt
 
+  // Associação com Categoria - Produto é de uma única categoria ( N => 1)
+  categoriaId Int
+  categoria   Categoria @relation(fields: [categoriaId], references: [id])
+
+  // Produtos tem vários fornecedores ( N -> N )
+  fornecedores Fornecedor[]
+
   @@map("produtos")
+}
+
+model Fornecedor {
+  id        Int       @id @default(autoincrement())
+  nome      String    @db.VarChar(100)
+  cnpj      Decimal   @unique
+  createdAt DateTime? @default(now())
+  updatedAt DateTime? @updatedAt
+
+  // Fornecedor fornece vários produtos ( N -> N )
+  produtos Produto[]
+  @@map("fornecedores")
+}
+
+model Categoria {
+  id Int @id @default(autoincrement())
+  nome String @db.VarChar(50)
+
+  // Associação com produtos - Categoria é associada a vários produtos ( 1 => N )
+  produtos Produto[]
+
+  @@map("categorias")
 }
