@@ -36,15 +36,24 @@ model Fornecedor {
 
   // Fornecedor fornece vários produtos ( N -> N )
   produtos Produto[]
+
   @@map("fornecedores")
 }
 
 model Categoria {
-  id Int @id @default(autoincrement())
+  id   Int    @id @default(autoincrement())
   nome String @db.VarChar(50)
 
   // Associação com produtos - Categoria é associada a vários produtos ( 1 => N )
   produtos Produto[]
 
   @@map("categorias")
+}
+
+model Usuario {
+  id Int @id @default(autoincrement())
+  email String @db.VarChar(100) @unique
+  senha String @db.VarChar(100)
+
+  @@map("usuarios")
 }
