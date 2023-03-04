@@ -1,8 +1,10 @@
 // Importa componentes do express
-import { Router, Request, Response } from 'express';
-import ProdutoController from './controllers/ProdutoController';
-import TesteController from './controllers/TesteController';
-import ValidaTeste1 from './middlewares/ValidaTeste1';
+import { Router, Request, Response } from 'express'
+import ProdutoController from './controllers/ProdutoController'
+import UsuarioController from './controllers/UsuarioController'
+import TesteController from './controllers/TesteController'
+import ValidaTeste1 from './middlewares/ValidaTeste1'
+import ValidaToken from './middlewares/ValidaToken'
 // Instancia Roteador
 const Roteador = Router();
 
@@ -17,10 +19,17 @@ Roteador.get(
     new TesteController().teste1
 );
 
-Roteador.get('/produtos', new ProdutoController().index);
-Roteador.get('/produtos/{id}', new ProdutoController().show);
-Roteador.post('/produtos', new ProdutoController().store);
-Roteador.put('/produtos/:id', new ProdutoController().update);
-Roteador.delete('/produtos/:id', new ProdutoController().delete);
+// Produtos
+Roteador.get('/produtos', ValidaToken, new ProdutoController().index);
+Roteador.get('/produtos/:id', ValidaToken, new ProdutoController().show);
+Roteador.post('/produtos', ValidaToken, new ProdutoController().store);
+Roteador.put('/produtos/:id', ValidaToken, new ProdutoController().update);
+Roteador.put('/produtos/fornecedores/:id', ValidaToken, new ProdutoController().associarFornecedores);
+Roteador.delete('/produtos/:id', ValidaToken, new ProdutoController().delete);
+
+// Usuarios
+Roteador.post('/usuarios', new UsuarioController().store);
+// Autenticação
+Roteador.get('/usuarios/autenticacao', new UsuarioController().autenticacao);
 
 export default Roteador;
