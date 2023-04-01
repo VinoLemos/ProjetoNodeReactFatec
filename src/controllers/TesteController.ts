@@ -1,15 +1,15 @@
-// Imports
-import { Request, Response } from 'express';
+// Importa componentes do express
+import {Request, Response} from 'express';
 // Controller
-class TesteController {
+class TesteController{
     // Função transferida do arquivo de rotas
-    teste1 (req:Request, res:Response) {
-        // Obtém route param
-        const y = req.query.id;
-        // Obtém query param
+    async teste1 (req:Request,res:Response) {
+        // obtém query param
         const x = req.query.num;
+        // obtem route param
+        const y = req.params.id;
         // Envia resposta ao cliente
         return res.send(`Resultado: ${Number(x) + Number(y)}`);
     }
 }
-export default TesteController;
+export default TesteController
